@@ -14,7 +14,7 @@ namespace ApiCore.Controllers
         public List<GebruikerDTO> Get()
         {
           
-        List<GebruikerDTO> gebruikers = fillgebruikers();
+         List<GebruikerDTO> gebruikers = fillgebruikers();
             return gebruikers;
         }
         private List<GebruikerDTO> fillgebruikers()

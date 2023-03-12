@@ -1,4 +1,6 @@
-﻿using Core.Enum;
+﻿using Core.DTO;
+using Core.Enum;
+using Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +11,24 @@ namespace Core
 {
     public class Gebruiker
     {
-       // readonly IGebruikerDal IgebruikerDal;
+        readonly IGebruikerDal IgebruikerDal;
         string Naam { get; }
         private string Email { get; }
         string Wachtwoord { get; }
         private Rol Rol { get; }
 
+        public Gebruiker(IGebruikerDal gebruikerDal)
+        {
+            IgebruikerDal = gebruikerDal;
+        }
+        public Gebruiker(GebruikerDTO gebruikerDTO)
+        {
+            Naam = gebruikerDTO.Naam;
+            Email = gebruikerDTO.Email;
+            Wachtwoord = gebruikerDTO.Wachtwoord;
+            Rol = gebruikerDTO.Rol;
+        }
     }
+
+
 }

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <None Remove="Item.cs~RF43b34a4d.TMP" />
   </ItemGroup>
 
   <ItemGroup>

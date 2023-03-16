@@ -13,16 +13,16 @@ namespace ApiCore.Controllers
         [HttpGet(Name = "GetUser")]
         public List<GebruikerDTO> Get()
         {
-          
-         List<GebruikerDTO> gebruikers = fillgebruikers();
+
+            List<GebruikerDTO> gebruikers = fillgebruikers();
             return gebruikers;
         }
         private List<GebruikerDTO> fillgebruikers()
         {
             List<GebruikerDTO> gebruikers = new List<GebruikerDTO>
             {
-                new GebruikerDTO( "testnaam", "testmail", "testwachtwoord", Core.Enum.Rol.bezitter ),
-                new GebruikerDTO( "testnaam2", "testmail2", "testwachtwoord2", Core.Enum.Rol.bezitter )
+                new GebruikerDTO() {Naam = "testnaam", Email = "testmail", Wachtwoord = "testwachtwoord", Rol = Core.Enum.Rol.bezitter },
+                //new GebruikerDTO( "testnaam2", "testmail2", "testwachtwoord2", Core.Enum.Rol.bezitter )
 
             };
             return gebruikers;

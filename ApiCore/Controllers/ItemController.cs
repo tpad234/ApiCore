@@ -1,6 +1,8 @@
-﻿using Core.DTO;
+﻿using Core;
+using Core.DTO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,6 +12,12 @@ namespace ApiCore.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
+     
+        private readonly DatabaseContext _dataContext;
+        public ItemController(DatabaseContext context)
+        {
+            _dataContext = context;
+        }
         // GET: api/<ItemController>
         [EnableCors("AnotherPolicy")]
         [HttpGet(Name = "GetItem")]
@@ -21,7 +29,7 @@ namespace ApiCore.Controllers
         }
         private List<ItemDTO> fillitems()
         {
-            return null;
+            return _dataContext.items.ToList();
             //GebruikerDTO gebruiker = new GebruikerDTO("testnaam2", "testmail2", "testwachtwoord2", Core.Enum.Rol.bezitter);
             //List<ItemDTO> items = new List<ItemDTO>
             //{

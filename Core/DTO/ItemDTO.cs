@@ -14,7 +14,8 @@ namespace Core.DTO
         public string Code { get; set; }
         public string Naam { get; set; }
         public string Beschrijving { get; set; }
-        public GebruikerDTO Eigenaar { get; set; }
+        public int EigenaarID { get; set; }
+        public virtual GebruikerDTO Eigenaar { get; set; }
         public Status status { get; set; }
 
     }

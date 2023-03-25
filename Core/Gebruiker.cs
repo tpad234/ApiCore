@@ -22,6 +22,7 @@ namespace Core
             Wachtwoord = gebruikerDTO.Wachtwoord;
             Rol = gebruikerDTO.Rol;
         }
+
     }
 
 

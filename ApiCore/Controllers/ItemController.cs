@@ -29,15 +29,19 @@ namespace ApiCore.Controllers
         }
         private List<ItemDTO> fillitems()
         {
-            return _dataContext.items.ToList();
-            //GebruikerDTO gebruiker = new GebruikerDTO("testnaam2", "testmail2", "testwachtwoord2", Core.Enum.Rol.bezitter);
-            //List<ItemDTO> items = new List<ItemDTO>
-            //{
-            //    new ItemDTO( "93jdl92ks", "testnaam", "testbeschrijbveing", gebruiker, Core.Enum.Status.bezit ),
-            //    new ItemDTO( "43jdl92ks", "testnaam2", "testbeschrijbveing2", gebruiker, Core.Enum.Status.bezit  )
+            var items = _dataContext.items.ToList();
 
-            //};
-            //return items;
+            var gebruiker = (from i in _dataContext.items
+                             join g in _dataContext.gebruikers on i.Id equals g.Id
+                             select new GebruikerDTO
+                             {
+                                 Id = i.Id,
+                                 Naam = g.Naam
+
+                             }).ToList();
+      
+            return items;
+         
         }
 
         // GET api/<BezitController>/5

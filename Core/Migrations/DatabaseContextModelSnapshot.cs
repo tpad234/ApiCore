@@ -21,7 +21,7 @@ namespace Core.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.DTO.GebruikerDTO", b =>
+            modelBuilder.Entity("Core.Gebruiker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace Core.Migrations
                     b.ToTable("gebruikers");
                 });
 
-            modelBuilder.Entity("Core.DTO.ItemDTO", b =>
+            modelBuilder.Entity("Core.Item", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,9 +82,9 @@ namespace Core.Migrations
                     b.ToTable("items");
                 });
 
-            modelBuilder.Entity("Core.DTO.ItemDTO", b =>
+            modelBuilder.Entity("Core.Item", b =>
                 {
-                    b.HasOne("Core.DTO.GebruikerDTO", "Eigenaar")
+                    b.HasOne("Core.Gebruiker", "Eigenaar")
                         .WithMany("Items")
                         .HasForeignKey("EigenaarId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -93,7 +93,7 @@ namespace Core.Migrations
                     b.Navigation("Eigenaar");
                 });
 
-            modelBuilder.Entity("Core.DTO.GebruikerDTO", b =>
+            modelBuilder.Entity("Core.Gebruiker", b =>
                 {
                     b.Navigation("Items");
                 });

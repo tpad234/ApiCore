@@ -1,5 +1,4 @@
-﻿using Core.DTO;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using System;
@@ -31,10 +30,10 @@ namespace Core
             options.UseSqlServer(connectionString);
         }
 
-        public DbSet<GebruikerDTO> gebruikers { get; set; }
+        public DbSet<Gebruiker> gebruikers { get; set; }
 
 
-        public DbSet<ItemDTO> items { get; set; }
+        public DbSet<Item> items { get; set; }
 
 
         }

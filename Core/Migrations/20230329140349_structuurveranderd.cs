@@ -5,7 +5,7 @@
 namespace Core.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangeDatabaseProvider : Migration
+    public partial class structuurveranderd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

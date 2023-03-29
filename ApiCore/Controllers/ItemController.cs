@@ -1,5 +1,4 @@
 ﻿using Core;
-using Core.DTO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,13 +22,15 @@ namespace ApiCore.Controllers
         // GET: api/<ItemController>
         [EnableCors("AnotherPolicy")]
         [HttpGet(Name = "GetItem")]
-        public List<ItemDTO> Get()
+        public List<Item> Get()
         {
             //hierdto van maken laten overzetten 
-            List<ItemDTO> items = fillitems();
+            List<Item> items = fillitems();
+
+
             return items;
         }
-        private List<ItemDTO> fillitems()
+        private List<Item> fillitems()
         {
             var items = _dataContext.items.Include(i => i.Eigenaar).ToList();
             

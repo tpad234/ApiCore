@@ -1,6 +1,7 @@
 ﻿using Core.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -21,17 +22,19 @@ namespace Core
         {
             Configuration = configuration;
         }
-   
+
+      
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to mysql with connection string from app settings
             var connectionString = Configuration.GetConnectionString("WebApiDatabase");
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            options.UseSqlServer(connectionString);
         }
 
-            public DbSet<GebruikerDTO> gebruikers { get; set; }
+        public DbSet<GebruikerDTO> gebruikers { get; set; }
 
-            public DbSet<ItemDTO> items { get; set; }
+
+        public DbSet<ItemDTO> items { get; set; }
 
 
         }

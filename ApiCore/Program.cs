@@ -21,8 +21,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    string connectionString = "Server=localhost; Database=PolitieDB; Uid=root; Pwd=";
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseSqlServer("Server=(LocalDb)\\MSSQLLocalDB;Database=PolitieDB;Integrated Security=true;");
 
 });
 

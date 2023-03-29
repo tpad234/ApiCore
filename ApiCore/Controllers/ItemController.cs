@@ -2,6 +2,8 @@
 using Core.DTO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,23 +25,14 @@ namespace ApiCore.Controllers
         [HttpGet(Name = "GetItem")]
         public List<ItemDTO> Get()
         {
-
+            //hierdto van maken laten overzetten 
             List<ItemDTO> items = fillitems();
             return items;
         }
         private List<ItemDTO> fillitems()
         {
-            var items = _dataContext.items.ToList();
-
-            var gebruiker = (from i in _dataContext.items
-                             join g in _dataContext.gebruikers on i.Id equals g.Id
-                             select new GebruikerDTO
-                             {
-                                 Id = i.Id,
-                                 Naam = g.Naam
-
-                             }).ToList();
-      
+            var items = _dataContext.items.Include(i => i.Eigenaar).ToList();
+            
             return items;
          
         }

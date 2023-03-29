@@ -9,6 +9,11 @@ namespace ApiCore.Controllers
     [Route("[controller]")]
     public class GebruikerController : Controller
     {
+        private readonly DatabaseContext _dataContext;
+        public GebruikerController(DatabaseContext context)
+        {
+            _dataContext = context;
+        }
         [EnableCors("AnotherPolicy")]
         [HttpGet(Name = "GetUser")]
         public List<GebruikerDTO> Get()
@@ -19,12 +24,8 @@ namespace ApiCore.Controllers
         }
         private List<GebruikerDTO> fillgebruikers()
         {
-            List<GebruikerDTO> gebruikers = new List<GebruikerDTO>
-            {
-                new GebruikerDTO() {Naam = "testnaam", Email = "testmail", Wachtwoord = "testwachtwoord", Rol = Core.Enum.Rol.bezitter },
-                //new GebruikerDTO( "testnaam2", "testmail2", "testwachtwoord2", Core.Enum.Rol.bezitter )
+            var gebruikers = _dataContext.gebruikers.ToList();
 
-            };
             return gebruikers;
         }
     }

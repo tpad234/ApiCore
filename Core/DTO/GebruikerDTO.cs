@@ -10,11 +10,14 @@ namespace Core.DTO
 {
     public class GebruikerDTO
     {
-        [Key] public int Id { get; set; }
+        [Key] 
+        public int Id { get; set; }
         public string Naam { get; set; }
         public string Email { get; set; }
         public string Wachtwoord { get; set; }
         public Rol Rol { get; set; }
+
+        public ICollection<ItemDTO> Items { get; set; }
 
     }
 }

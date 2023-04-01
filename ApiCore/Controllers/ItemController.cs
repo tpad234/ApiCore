@@ -42,16 +42,32 @@ namespace ApiCore.Controllers
         private List<Item> fillitems()
         {
             var items = _dataContext.items.Include(i => i.Eigenaar).ToList();
-            
+
             return items;
-         
+
+        }
+        private List<Item> fillitems(int ID)
+        {
+            var items = _dataContext.items.Include(i => i.Eigenaar).Where(i => i.EigenaarId == ID).ToList();
+
+            return items;
+
         }
 
         // GET api/<BezitController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [EnableCors("AnotherPolicy")]
+        [HttpGet("{id}", Name ="getitempergebruiker")]
+        public List<ItemDTO> Get(int id)
         {
-            return "value";
+            List<Item> items = fillitems(id);
+            List<ItemDTO> itemDTOs = new List<ItemDTO>();
+            foreach (Item i in items)
+            {
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
+                ItemDTO item = new ItemDTO(i.Id, i.Code, i.Naam, i.Beschrijving, i.EigenaarId, gebruiker, i.status);
+                itemDTOs.Add(item);
+            }
+            return itemDTOs;
         }
 
         // POST api/<BezitController>

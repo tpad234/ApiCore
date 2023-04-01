@@ -1,4 +1,6 @@
-﻿using Core;
+﻿using Azure.Core.GeoJson;
+using Core;
+using Core.DTO;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +24,20 @@ namespace ApiCore.Controllers
         // GET: api/<ItemController>
         [EnableCors("AnotherPolicy")]
         [HttpGet(Name = "GetItem")]
-        public List<Item> Get()
+        public ActionResult<List<ItemDTO>> Get()
         {
             //hierdto van maken laten overzetten 
             List<Item> items = fillitems();
 
+            List<ItemDTO> itemDTOs = new List<ItemDTO>();
+            foreach (Item i in items)
+            {
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
+                ItemDTO item = new ItemDTO(i.Id, i.Code,i.Naam ,i.Beschrijving, i.EigenaarId, gebruiker, i.status);
+                itemDTOs.Add(item);
+            }
 
-            return items;
+            return itemDTOs;
         }
         private List<Item> fillitems()
         {

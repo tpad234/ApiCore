@@ -29,16 +29,22 @@ namespace ApiCore.Controllers
             //hierdto van maken laten overzetten 
             List<Item> items = fillitems();
 
-            List<ItemDTO> itemDTOs = new List<ItemDTO>();
-            foreach (Item i in items)
-            {
-                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
-                ItemDTO item = new ItemDTO(i.Id, i.Code,i.Naam ,i.Beschrijving, i.EigenaarId, gebruiker, i.status);
-                itemDTOs.Add(item);
-            }
+            List<ItemDTO> itemDTOs = ItemToItemdto(items);
 
             return itemDTOs;
         }
+        private List<ItemDTO> ItemToItemdto(List<Item> items)
+        {
+            List<ItemDTO> itemDTOs = new List<ItemDTO>();
+            foreach (Item i in items) 
+            {
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
+                ItemDTO item = new ItemDTO(i.Id, i.Code, i.Naam, i.Beschrijving, i.EigenaarId, gebruiker, i.status);
+                itemDTOs.Add(item);
+            }
+            return itemDTOs;
+        }
+
         private List<Item> fillitems()
         {
             var items = _dataContext.items.Include(i => i.Eigenaar).ToList();
@@ -53,13 +59,35 @@ namespace ApiCore.Controllers
             return items;
 
         }
+        private List<Item> fillitems(int ID, Core.Enum.Status status)
+        {
+            var items = _dataContext.items.Include(i => i.Eigenaar).Where(i => i.EigenaarId == ID && i.status == status).ToList();
+
+            return items;
+
+        }
 
         // GET api/<BezitController>/5
         [EnableCors("AnotherPolicy")]
-        [HttpGet("{id}", Name ="getitempergebruiker")]
+        [HttpGet("{id}", Name = "getitempergebruiker")]
         public List<ItemDTO> Get(int id)
         {
             List<Item> items = fillitems(id);
+            List<ItemDTO> itemDTOs = new List<ItemDTO>();
+            foreach (Item i in items)
+            {
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
+                ItemDTO item = new ItemDTO(i.Id, i.Code, i.Naam, i.Beschrijving, i.EigenaarId, gebruiker, i.status);
+                itemDTOs.Add(item);
+            }
+            return itemDTOs;
+        }
+
+        [EnableCors("AnotherPolicy")]
+        [HttpGet("{id}/status/{status}", Name = "getitempergebruikermetstatus")]
+        public List<ItemDTO> Get(int id, [FromQuery] Core.Enum.Status status)
+        {
+            List<Item> items = fillitems(id, status);
             List<ItemDTO> itemDTOs = new List<ItemDTO>();
             foreach (Item i in items)
             {

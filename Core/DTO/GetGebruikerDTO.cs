@@ -13,15 +13,13 @@ namespace Core.DTO
         public int Id { get; set; }
         public string Naam { get; set; }
         public string Email { get; set; }
-        public string Wachtwoord { get; set; }
         public Rol Rol { get; set; }
 
-        public GetGebruikerDTO(int Id, string Naam, string Email, string Wachtwoord, Rol Rol)
+        public GetGebruikerDTO(int Id, string Naam, string Email, Rol Rol)
         {
             this.Id = Id;
             this.Naam = Naam;
             this.Email = Email;
-            this.Wachtwoord = Wachtwoord;
             this.Rol = Rol;
 
         }

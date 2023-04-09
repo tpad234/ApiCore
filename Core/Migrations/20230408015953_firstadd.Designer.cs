@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230329140349_structuurveranderd")]
-    partial class structuurveranderd
+    [Migration("20230408015953_firstadd")]
+    partial class firstadd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Core;
 using Microsoft.AspNetCore.Cors;
+using Core.DTO;
 
 namespace ApiCore.Controllers
 {
@@ -15,11 +16,24 @@ namespace ApiCore.Controllers
         }
         [EnableCors("AnotherPolicy")]
         [HttpGet(Name = "GetUser")]
-        public List<Gebruiker> Get()
+        public List<GetGebruikerDTO> Get()
         {
 
             List<Gebruiker> gebruikers = fillgebruikers();
-            return gebruikers;
+
+            List<GetGebruikerDTO> gebruikerDTOs = GebruikerTODTO(gebruikers);
+            return gebruikerDTOs;
+        }
+
+        private List<GetGebruikerDTO> GebruikerTODTO(List<Gebruiker> gebruikers)
+        {
+            List<GetGebruikerDTO> gebruikerDTOs = new List<GetGebruikerDTO>();
+            foreach (Gebruiker i in gebruikers)
+            {
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Id, i.Naam, i.Email, i.Rol);
+                gebruikerDTOs.Add(gebruiker);
+            }
+            return gebruikerDTOs;
         }
         private List<Gebruiker> fillgebruikers()
         {

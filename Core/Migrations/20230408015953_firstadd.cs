@@ -5,7 +5,7 @@
 namespace Core.Migrations
 {
     /// <inheritdoc />
-    public partial class structuurveranderd : Migration
+    public partial class firstadd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

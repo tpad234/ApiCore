@@ -38,7 +38,7 @@ namespace ApiCore.Controllers
             List<ItemDTO> itemDTOs = new List<ItemDTO>();
             foreach (Item i in items) 
             {
-                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Rol);
                 ItemDTO item = new ItemDTO(i.Id, i.Code, i.Naam, i.Beschrijving, i.EigenaarId, gebruiker, i.status);
                 itemDTOs.Add(item);
             }
@@ -76,7 +76,7 @@ namespace ApiCore.Controllers
             List<ItemDTO> itemDTOs = new List<ItemDTO>();
             foreach (Item i in items)
             {
-                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Rol);
                 ItemDTO item = new ItemDTO(i.Id, i.Code, i.Naam, i.Beschrijving, i.EigenaarId, gebruiker, i.status);
                 itemDTOs.Add(item);
             }
@@ -91,7 +91,7 @@ namespace ApiCore.Controllers
             List<ItemDTO> itemDTOs = new List<ItemDTO>();
             foreach (Item i in items)
             {
-                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Wachtwoord, i.Eigenaar.Rol);
+                GetGebruikerDTO gebruiker = new GetGebruikerDTO(i.Eigenaar.Id, i.Eigenaar.Naam, i.Eigenaar.Email, i.Eigenaar.Rol);
                 ItemDTO item = new ItemDTO(i.Id, i.Code, i.Naam, i.Beschrijving, i.EigenaarId, gebruiker, i.status);
                 itemDTOs.Add(item);
             }

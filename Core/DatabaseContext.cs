@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-   
-        public class DatabaseContext : DbContext
+
+    public class DatabaseContext : DbContext
     {
 
         protected readonly IConfiguration Configuration;
@@ -22,7 +22,7 @@ namespace Core
             Configuration = configuration;
         }
 
-      
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to mysql with connection string from app settings
@@ -35,7 +35,9 @@ namespace Core
 
         public DbSet<Item> items { get; set; }
 
+     //   public DbSet<Verzoeken> verzoeken { get;set; }
 
-        }
+
+    }
 
 }

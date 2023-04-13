@@ -22,26 +22,22 @@ namespace Core
             Configuration = configuration;
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Item>()
-        //        .HasOne(i => i.Verzoeken)
-        //        .WithOne(v => v.Item)
-        //         .HasForeignKey<Item>(i => i.VerzoekenId)
-        //         .OnDelete(DeleteBehavior.Restrict);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<VervoerOpdrachten>()
+              .HasOne(i => i.Verzender)
+              .WithMany(v => v.VerstuurdeOpdrdachte)
+              .HasForeignKey(i => i.VerzenderId)
+               .OnDelete(DeleteBehavior.Restrict);
 
-        //    modelBuilder.Entity<Item>()
-        //      .HasOne(i => i.Eigenaar)
-        //      .WithMany(v => v.Items)
-        //       .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<VervoerOpdrachten>()
+             .HasOne(i => i.Ontvanger)
+             .WithMany(v => v.Ontvangeopdrachte)
+             .HasForeignKey(i => i.OntvangerId)
+              .OnDelete(DeleteBehavior.Restrict);
 
-        //    modelBuilder.Entity<Verzoeken>()
-        //       .HasOne(i => i.Item)
-        //       .WithOne(v => v.Verzoeken)
-        //         .HasForeignKey<Verzoeken>(i => i.ItemId)
-        //        .OnDelete(DeleteBehavior.Restrict);
-
-        //}
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to mysql with connection string from app settings
@@ -54,7 +50,7 @@ namespace Core
 
         public DbSet<Item> items { get; set; }
 
-       // public DbSet<Verzoeken> verzoeken { get;set; }
+        public DbSet<VervoerOpdrachten> verzoeken { get;set; }
 
 
     }

@@ -19,7 +19,9 @@ namespace Core
         public Rol Rol { get; set; }
 
         public ICollection<Item> Items { get; set; }
-      //  public ICollection<Verzoeken> verzoeken { get; set; }
+        public ICollection<VervoerOpdrachten>? Ontvangeopdrachte { get; set; }
+        public ICollection<VervoerOpdrachten>? VerstuurdeOpdrdachte { get; set; }
+
 
     }
 

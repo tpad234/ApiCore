@@ -4,6 +4,7 @@ using Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230413081254_pogingaddverzoek5")]
+    partial class pogingaddverzoek5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,6 +86,10 @@ namespace Core.Migrations
 
                     b.HasIndex("EigenaarId");
 
+                    b.HasIndex("VerzoekenId")
+                        .IsUnique()
+                        .HasFilter("[VerzoekenId] IS NOT NULL");
+
                     b.ToTable("items");
                 });
 
@@ -105,9 +112,6 @@ namespace Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ItemId")
-                        .IsUnique();
-
                     b.HasIndex("OntvangerId");
 
                     b.ToTable("verzoeken");
@@ -118,27 +122,26 @@ namespace Core.Migrations
                     b.HasOne("Core.Gebruiker", "Eigenaar")
                         .WithMany("Items")
                         .HasForeignKey("EigenaarId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Verzoeken", "Verzoeken")
+                        .WithOne("Item")
+                        .HasForeignKey("Core.Item", "VerzoekenId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Eigenaar");
+
+                    b.Navigation("Verzoeken");
                 });
 
             modelBuilder.Entity("Core.Verzoeken", b =>
                 {
-                    b.HasOne("Core.Item", "Item")
-                        .WithOne("Verzoeken")
-                        .HasForeignKey("Core.Verzoeken", "ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Core.Gebruiker", "Ontvanger")
                         .WithMany("verzoeken")
                         .HasForeignKey("OntvangerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Item");
 
                     b.Navigation("Ontvanger");
                 });
@@ -150,9 +153,9 @@ namespace Core.Migrations
                     b.Navigation("verzoeken");
                 });
 
-            modelBuilder.Entity("Core.Item", b =>
+            modelBuilder.Entity("Core.Verzoeken", b =>
                 {
-                    b.Navigation("Verzoeken")
+                    b.Navigation("Item")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

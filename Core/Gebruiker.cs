@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace Core
         public Rol Rol { get; set; }
 
         public ICollection<Item> Items { get; set; }
-
+      //  public ICollection<Verzoeken> verzoeken { get; set; }
 
     }
 

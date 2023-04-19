@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core.GeoJson;
 using Core;
-using Microsoft.AspNetCore.Cors;
 using Core.DTO;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using System.Configuration;
+
 
 namespace ApiCore.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class GebruikerController : Controller
     {
         private readonly DatabaseContext _dataContext;
@@ -22,6 +27,7 @@ namespace ApiCore.Controllers
             List<Gebruiker> gebruikers = fillgebruikers();
 
             List<GetGebruikerDTO> gebruikerDTOs = GebruikerTODTO(gebruikers);
+
             return gebruikerDTOs;
         }
 
@@ -40,6 +46,23 @@ namespace ApiCore.Controllers
             var gebruikers = _dataContext.gebruikers.ToList();
 
             return gebruikers;
+        }
+        // POST api/<BezitController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
+
+        // PUT api/<BezitController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<BezitController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }

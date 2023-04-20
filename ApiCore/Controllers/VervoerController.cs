@@ -1,5 +1,6 @@
 ﻿using Core;
 using Core.DTO;
+using Core.Enum;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -56,9 +57,52 @@ namespace ApiCore.Controllers
         }
 
         // POST api/<VervoerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [EnableCors("AnotherPolicy")]
+        [HttpPost(Name = "postVervoer")]
+        public IActionResult Post([FromBody] PostVervoerDTO vervoerDTO)
         {
+            try
+            {
+                // Convert VervoerDTO to VervoerOpdrachten
+                List<Item> Items = new List<Item>();
+                VervoerOpdrachten vervoer = new VervoerOpdrachten();
+                List<VervoerOpdrachten> vervoercheck = new List<VervoerOpdrachten>();
+                vervoer.ItemId = vervoerDTO.ItemId;
+                vervoer.VerzenderId = vervoerDTO.VerzenderId;
+                vervoer.OntvangerId = vervoerDTO.OntvangerId;
+                vervoer.status = Status.verzonden;
+                vervoercheck = _dataContext.verzoeken.ToList();
+                Items = _dataContext.items.ToList();
+
+
+                foreach (VervoerOpdrachten v in vervoercheck)
+                {
+                    if (v.ItemId != vervoer.ItemId || v.VerzenderId != vervoer.VerzenderId || v.OntvangerId != vervoer.OntvangerId)
+                    {
+                        foreach (Item i in Items)
+                        {
+                            if (i.Id == vervoer.ItemId)
+                            {
+                                i.status = Status.verzonden;
+                            }
+                        }
+                        _dataContext.verzoeken.Add(vervoer);
+                        _dataContext.SaveChanges();
+
+                    }
+                    else
+                    {
+                        throw new Exception("dit item bestaat al ");
+
+                    }
+                }
+
+                return Ok(new { vervoer.ItemId });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         // PUT api/<VervoerController>/5

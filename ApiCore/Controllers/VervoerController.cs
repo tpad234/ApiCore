@@ -50,10 +50,23 @@ namespace ApiCore.Controllers
             return verzoeken;
         }
         // GET api/<VervoerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [EnableCors("AnotherPolicy")]
+        [HttpGet("GetVervoerMetVerzender")]
+        public List<VervoerDTO> Get(int id)
         {
-            return "value";
+            List<VervoerOpdrachten> Verzoeken = fillVerzoeken();
+            List<VervoerOpdrachten> Verzoekenuit = new List<VervoerOpdrachten>();
+            foreach (VervoerOpdrachten v in Verzoeken)
+            {
+                if (v.Ontvanger.Id == id)
+                {
+                    Verzoekenuit.Add(v);
+                }
+            }
+
+            List<VervoerDTO> gebruikerDTOs = verzoekToDTO(Verzoekenuit);
+
+            return gebruikerDTOs;
         }
 
         // POST api/<VervoerController>
@@ -83,7 +96,16 @@ namespace ApiCore.Controllers
                         {
                             if (i.Id == vervoer.ItemId)
                             {
-                                i.status = Status.verzonden;
+                                if (i.status == Status.bezit)
+                                {
+                                    i.status = Status.verzonden;
+
+                                }
+                                else
+                                {
+                                    throw new Exception("dit item is al verzonden");
+
+                                }
                             }
                         }
                         _dataContext.verzoeken.Add(vervoer);
